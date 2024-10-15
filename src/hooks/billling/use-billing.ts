@@ -3,7 +3,7 @@ import {
   onProcessPayment,
   onUpdateSubscription,
 } from '@/actions/mercadoPago'
-import  {onCreateCustomerPaymentIntentSecret} from '@/actions/stripe'
+import  {onCreateCustomerPaymentIntentSecret,onGetStripeClientSecret} from '@/actions/stripe'
 import { useToast } from '@/components/ui/use-toast'
 import axios from 'axios'
 import {
@@ -104,6 +104,29 @@ export const useCompleteCustomerPayment = (onNext: () => void) => {
   return { processing, onMakePayment }
 }
 
+export const useStripeElements = (payment: 'STANDARD' | 'PRO' | 'ULTIMATE') => {
+  const [stripeSecret, setStripeSecret] = useState<string>('')
+  const [loadForm, setLoadForm] = useState<boolean>(false)
+
+  const onGetBillingIntent = async (plans: 'STANDARD' | 'PRO' | 'ULTIMATE') => {
+    try {
+      setLoadForm(true)
+      const intent = await onGetStripeClientSecret(plans)
+      if (intent) {
+        setLoadForm(false)
+        setStripeSecret(intent.secret!)
+      }
+    } catch (error) {
+      console.log(error)
+    }
+  }
+
+  useEffect(() => {
+    onGetBillingIntent(payment)
+  }, [payment])
+
+  return { stripeSecret, loadForm }
+}
 
 
 
