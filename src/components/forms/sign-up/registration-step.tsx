@@ -3,17 +3,17 @@ import { useAuthContextHook } from "@/context/use-auth-context";
 import React,{ useState } from "react";
 import { useFormContext } from "react-hook-form";
 import TypeSelectionForm from "./type-selection-form";
-import { Spinner } from "@/components/spinner";
+import  SpinnerWrapper  from "@/components/spinnerWrapper";
 import dynamic from "next/dynamic";
 
 const DetailForm = dynamic(() => import('./account-details-form'), {
   ssr: false,
-  loading: Spinner,
+  loading: SpinnerWrapper,
 })
 
 const OTPForm = dynamic(() => import('./otp-form'), {
   ssr: false,
-  loading: Spinner,
+  loading: SpinnerWrapper,
 })
 type Props = {};
 
