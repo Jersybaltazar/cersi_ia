@@ -143,10 +143,19 @@ export async function GET() {
         }
       }
     }
+     // Devolvemos un error genérico si algo sale mal sin entrar en el bloque `catch`.
+     return NextResponse.json(
+      { error: 'An unexpected error occurred during Stripe account setup' },
+      { status: 500 }
+    );
   } catch (error) {
     console.error(
       'An error occurred when calling the Stripe API to create an account:',
       error
-    )
+    );
+    return NextResponse.json(
+      { error: 'Failed to create Stripe account' },
+      { status: 500 }
+    );
   }
 }
