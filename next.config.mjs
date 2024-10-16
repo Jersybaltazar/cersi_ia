@@ -11,9 +11,18 @@ const nextConfig = {
                 protocol:'https',
                 hostname:'wordpress-1320300-4825588.cloudwaysapps.com'
             },
+        ]
+    },
+    async headers(){
+        return [
             {
-                protocol:'https',
-                hostname:'pusher.com'
+                source: '/(api|dashboard|integration)/:path*',
+                headers: [
+                    {
+                        key: 'x-custom-header',
+                        value: 'my custom header value',
+                    },
+                ],   
             }
         ]
     }
