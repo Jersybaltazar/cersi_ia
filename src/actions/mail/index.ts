@@ -86,7 +86,7 @@ export const onCreateMarketingCampaign = async (name: string) => {
     })
 
     if (campaign) {
-      return { status: 200, message: 'You campaign was created' }
+      return { status: 200, message: 'Tu campaña fue creada' }
     }
   } catch (error) {
     console.log(error)
@@ -107,7 +107,7 @@ export const onSaveEmailTemplate = async (
       },
     })
 
-    return { status: 200, message: 'Email template created' }
+    return { status: 200, message: 'Plantilla de correo electrónico creada' }
   } catch (error) {
     console.log(error)
   }
@@ -129,7 +129,7 @@ export const onAddCustomersToEmail = async (
     })
 
     if (customerAdd) {
-      return { status: 200, message: 'Customer added to campaign' }
+      return { status: 200, message: 'Cliente añadido a la campaña' }
     }
   } catch (error) {}
 }
@@ -188,7 +188,7 @@ export const onBulkMailer = async (email: string[], campaignId: string) => {
         },
       })
       if (creditsUsed) {
-        return { status: 200, message: 'Campaign emails sent' }
+        return { status: 200, message: 'Correos electrónicos de campaña enviados' }
       }
     }
   } catch (error) {
