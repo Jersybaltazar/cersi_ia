@@ -46,7 +46,7 @@ const Bubble = ({ message, createdAt }: Props) => {
           'flex flex-col gap-3 min-w-[200px] max-w-[300px] p-4 rounded-t-md',
           message.role == 'assistant'
             ? 'bg-muted rounded-r-md'
-            : 'bg-grandis rounded-l-md'
+            : 'bg-blue-300 rounded-l-md'
         )}
       >
         {createdAt ? (
@@ -83,7 +83,7 @@ const Bubble = ({ message, createdAt }: Props) => {
                 href={message.link}
                 target="_blank"
               >
-                Your Link
+                Su enlace
               </Link>
             )}
           </p>
