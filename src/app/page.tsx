@@ -32,30 +32,29 @@ export default async function Home() {
       <Navbar />
       <section>
         <div className="flex items-center justify-center flex-col mt-[80px] gap-4 ">
-          <span className=" text-purple-900 bg-purples/20 px-4 py-2 rounded-full text-sm">
+          <span className=" text-[rgb(16,146,224)] bg-[rgb(16,146,224)]/20 px-4 py-2 rounded-full text-sm mb-5">
             Un Chat bot asistente en ventas impulsado por IA
           </span>
           <br />
-          <h1 className="text-8xl font-semibold tracking-tighter bg-white bg-[radial-gradient(100%_100%_at_top_left,white,white,rgb(74,32,138,.5))] text-transparent bg-clip-text text-center ">
+          <h1 className="text-8xl font-semibold tracking-tighter bg-white bg-[radial-gradient(100%_100%_at_top_left,rgb(16,146,224),white,rgb(74,32,138,.5))] text-transparent bg-clip-text text-center mb-10">
             SERSI-AI
           </h1>
-          <p className="text-center max-w-[600px] font-bold">
-            ¡Su asistente de ventas impulsado por IA! Incruste rambo AI en
+          <p className="text-center max-w-[600px] font-bold mb-10">
+            Descubra el poder de SERSI-AI , su asistente virtual personalizado e impulsado por potentes modelos de inteligencia artificial. Incruste SERSI-AI en
             cualquier sitio web ¡Con solo un fragmento de código!{" "}
           </p>
-          <Button className="bg-purple-900  font-bold text-white px-4">
-            Empezar Gratis
+          <Button className="bg-purple-900  font-bold text-white py-3 px-6 mb-10">
+          Iniciar Prueba Gratuita
           </Button>
           <Image
-            src="/images/hero.png"
+            src="/images/Captura.png"
             alt="LOGO"
-            sizes="100vw"
             style={{
-              width: "100px",
+              width: "auto",
               height: "auto",
             }}
-            width={0}
-            height={0}
+            width={1000}
+            height={100}
           />
         </div>
       </section>

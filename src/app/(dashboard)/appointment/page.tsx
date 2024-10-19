@@ -24,9 +24,12 @@ const Page = async (props: Props) => {
       </div>
     )
 
-  const bookingsExistToday = domainBookings.bookings.filter(
-    (booking) => booking.date.getDate() === today.getDate()
-  )
+    const bookingsExistToday = domainBookings.bookings.filter(
+      (booking) =>
+        booking.date.getDate() === today.getDate() &&
+        booking.date.getMonth() === today.getMonth() &&
+        booking.date.getFullYear() === today.getFullYear()
+    )
 
   return (
     <>

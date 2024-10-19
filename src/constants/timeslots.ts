@@ -21,4 +21,7 @@ type AppointmentTimeSlots = {
     {
       slot: '6:00pm',
     },
+    {
+      slot: '6:30pm',
+    }
   ]

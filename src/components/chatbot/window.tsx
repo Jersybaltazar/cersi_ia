@@ -85,7 +85,7 @@ export const BotWindow = forwardRef<HTMLDivElement, Props>(
             </Avatar>
             <div className="flex items-start flex-col">
               <h3 className="text-lg font-bold leading-none">
-                Representante de Ventas 
+                Representante de ventas de: 
               </h3>
               <p className="text-sm">{domainName.split('.com')[0]}</p>
               {realtimeMode?.mode && (
@@ -97,13 +97,7 @@ export const BotWindow = forwardRef<HTMLDivElement, Props>(
             </div>
           </div>
           <div className="relative w-16 h-16">
-            <Image
-              src="https://ucarecdn.com/03596a08-5c1d-4e70-9d0e-9d45bf63ef5d/propuser.png"
-              fill
-              alt="users"
-              style={{ objectFit: 'contain' }}
-              priority
-            />
+
           </div>
         </div>
         <TabsMenu
@@ -180,7 +174,7 @@ export const BotWindow = forwardRef<HTMLDivElement, Props>(
           </TabsContent>
         </TabsMenu>
         <div className="flex justify-center ">
-          <p className="text-gray-400 text-xs">Powered By Scut1</p>
+          <p className="text-gray-400 text-xs">SERSI-IA</p>
         </div>
       </div>
     )
