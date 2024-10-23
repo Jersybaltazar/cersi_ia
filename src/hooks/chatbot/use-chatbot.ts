@@ -40,6 +40,7 @@ export const useChatBot = () => {
           answer: string;
           domainId: string | null;
         }[];
+        icon:string;
       }
     | undefined
   >();

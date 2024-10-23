@@ -70,11 +70,14 @@ const BookAppointmentDate = ({
                   "px-10 py-4",
                   bookings &&
                     bookings.some(
-                      (booking) =>
-                        `${booking.date.getDate()}/${booking.date.getMonth() + 1}/${booking.date.getFullYear()}` ===
-                          `${date?.getDate()}/${date?.getMonth() }/${date?.getFullYear()}` &&
-                        booking.slot == slot.slot
-                    )
+                      (booking) =>{
+                        if (!date) return false; // Si date es undefined, no hay coincidencia
+                        return (
+                          `${booking.date.getDate()}/${booking.date.getMonth() + 1}/${booking.date.getFullYear()}` ===
+                            `${date.getDate()}/${date.getMonth() + 1}/${date.getFullYear()}` &&
+                          booking.slot == slot.slot
+                        );
+                      })
                     ? "bg-gray-300"
                     : "cursor-pointer border-orange hover:bg-grandis transition duration-150 ease-in-out"
                 )}

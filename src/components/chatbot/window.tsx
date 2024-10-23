@@ -1,56 +1,57 @@
-import { ChatBotMessageProps } from '@/schemas/conversation.schema'
-import React, { forwardRef } from 'react'
-import { UseFormRegister } from 'react-hook-form'
-import { Avatar, AvatarFallback, AvatarImage } from '../ui/avatar'
-import RealTimeMode from './real-time'
-import Image from 'next/image'
-import TabsMenu from '../tabs/intex'
-import { BOT_TABS_MENU } from '@/constants/menu'
-import ChatIcon from '@/icons/chat-icon'
-import { TabsContent } from '../ui/tabs'
-import { Separator } from '../ui/separator'
-import Bubble from './bubble'
-import { Responding } from './responding'
-import { Input } from '../ui/input'
-import { Button } from '../ui/button'
-import { Paperclip, Send } from 'lucide-react'
-import { Label } from '../ui/label'
-import { CardDescription, CardTitle } from '../ui/card'
-import Accordion from '../accordian'
-import UploadButton from '../upload-button'
+import { ChatBotMessageProps } from "@/schemas/conversation.schema";
+import React, { forwardRef } from "react";
+import { UseFormRegister } from "react-hook-form";
+import { Avatar, AvatarFallback, AvatarImage } from "../ui/avatar";
+import RealTimeMode from "./real-time";
+import Image from "next/image";
+import TabsMenu from "../tabs/intex";
+import { BOT_TABS_MENU } from "@/constants/menu";
+import ChatIcon from "@/icons/chat-icon";
+import { TabsContent } from "../ui/tabs";
+import { Separator } from "../ui/separator";
+import Bubble from "./bubble";
+import { Responding } from "./responding";
+import { Input } from "../ui/input";
+import { Button } from "../ui/button";
+import { Paperclip, Send } from "lucide-react";
+import { Label } from "../ui/label";
+import { CardDescription, CardTitle } from "../ui/card";
+import Accordion from "../accordian";
+import UploadButton from "../upload-button";
 
 type Props = {
-  errors: any
-  register: UseFormRegister<ChatBotMessageProps>
-  chats: { role: 'assistant' | 'user'; content: string; link?: string }[]
-  onChat(): void
-  onResponding: boolean
-  domainName: string
-  theme?: string | null
-  textColor?: string | null
-  help?: boolean
+  errors: any;
+  register: UseFormRegister<ChatBotMessageProps>;
+  chats: { role: "assistant" | "user"; content: string; link?: string }[];
+  onChat(): void;
+  onResponding: boolean;
+  domainName: string;
+  theme?: string | null;
+  textColor?: string | null;
+  help?: boolean;
   realtimeMode:
     | {
-        chatroom: string
-        mode: boolean
+        chatroom: string;
+        mode: boolean;
       }
-    | undefined
+    | undefined;
   helpdesk: {
-    id: string
-    question: string
-    answer: string
-    domainId: string | null
-  }[]
+    id: string;
+    question: string;
+    answer: string;
+    domainId: string | null;
+  }[];
   setChat: React.Dispatch<
     React.SetStateAction<
       {
-        role: 'user' | 'assistant'
-        content: string
-        link?: string | undefined
+        role: "user" | "assistant";
+        content: string;
+        link?: string | undefined;
       }[]
     >
-  >
-}
+  >;
+  icon?: string | null;
+};
 
 export const BotWindow = forwardRef<HTMLDivElement, Props>(
   (
@@ -67,27 +68,33 @@ export const BotWindow = forwardRef<HTMLDivElement, Props>(
       textColor,
       theme,
       help,
+      icon,
     },
     ref
   ) => {
-    console.log(errors)
     return (
-      <div className="h-[500px] w-[400px] flex flex-col bg-white rounded-xl mr-[80px] border-[1px] overflow-x-hidden">
-        <div className="flex justify-between px-4 pt-4">
-          <div className="flex gap-2">
-            <Avatar className="w-20 h-20">
-              <AvatarImage
-                src="https://ucarecdn.com/d24c6b73-55cb-466c-b08f-0cc49c6ce0ec/124599"
-                alt="@ucarecdn"
-                 
-              />
-              <AvatarFallback>CN</AvatarFallback>
-            </Avatar>
-            <div className="flex items-start flex-col">
-              <h3 className="text-lg font-bold leading-none">
-                Representante de ventas de: 
+      <div className="min-h-[500px] w-full max-w-[400px] sm:max-w-[300px] flex flex-col bg-white rounded-xl border-[1px] overflow-hidden px-3 xs:px-10 py-2 sm:py-3">
+        {" "}
+        <div className="flex justify-between px-10">
+          <div className="flex gap-2 items-start">
+            <div className="min-w-[60px] w-[60px] h-[60px] sm:w-20 sm:h-20 relative">
+              <Avatar className="w-full h-full">
+                <AvatarImage
+                  src={
+                    icon
+                      ? `https://ucarecdn.com/${icon}/` // Cargamos el icono dinámicamente
+                      : "https://ucarecdn.com/d24c6b73-55cb-466c-b08f-0cc49c6ce0ec/124599" // Fallback en caso de que el icono sea null
+                  }
+                  alt="Icono del Dominio"
+                />
+                <AvatarFallback>CN</AvatarFallback>
+              </Avatar>
+            </div>
+            <div className="flex flex-col justify-center">
+              <h3 className="text-base sm:text-lg font-bold leading-tight">
+                Representante de ventas de:
               </h3>
-              <p className="text-sm">{domainName.split('.com')[0]}</p>
+              <p className="text-sm">{domainName.split(".com")[0]}</p>
               {realtimeMode?.mode && (
                 <RealTimeMode
                   setChats={setChat}
@@ -95,9 +102,6 @@ export const BotWindow = forwardRef<HTMLDivElement, Props>(
                 />
               )}
             </div>
-          </div>
-          <div className="relative w-16 h-16">
-
           </div>
         </div>
         <TabsMenu
@@ -109,19 +113,16 @@ export const BotWindow = forwardRef<HTMLDivElement, Props>(
             <div className="flex flex-col h-full">
               <div
                 style={{
-                  background: theme || '',
-                  color: textColor || '',
+                  background: theme || "",
+                  color: textColor || "",
                 }}
-                className="px-3 flex h-[400px] flex-col py-5 gap-3 chat-window overflow-y-auto"
+                className="px-3 flex h-[350px] sm:h-[400px] flex-col py-5 gap-3 chat-window overflow-y-auto"
                 ref={ref}
               >
                 {chats.map((chat, key) => (
-                  <Bubble
-                    key={key}
-                    message={chat}
-                  />
+                  <Bubble key={key} message={chat} domainIcon={icon} />
                 ))}
-                {onResponding && <Responding />}
+                {onResponding && <Responding domainIcon={icon} />}
               </div>
               <form
                 onSubmit={onChat}
@@ -129,21 +130,18 @@ export const BotWindow = forwardRef<HTMLDivElement, Props>(
               >
                 <div className="flex justify-between">
                   <Input
-                    {...register('content')}
+                    {...register("content")}
                     placeholder="Escribe tu mensaje..."
                     className="focus-visible:ring-0 flex-1 p-0 focus-visible:ring-offset-0 bg-porcelain rounded-none outline-none border-none"
                   />
-                  <Button
-                    type="submit"
-                    className="mt-3"
-                  >
-                    <Send />
+                  <Button type="submit" className="mt-3">
+                    <Send className="w-5 h-5" />
                   </Button>
                 </div>
                 <Label htmlFor="bot-image">
                   <Paperclip />
                   <Input
-                    {...register('image')}
+                    {...register("image")}
                     type="file"
                     id="bot-image"
                     className="hidden"
@@ -154,11 +152,12 @@ export const BotWindow = forwardRef<HTMLDivElement, Props>(
           </TabsContent>
 
           <TabsContent value="servicio de asistencia">
-            <div className="h-[485px] overflow-y-auto overflow-x-hidden p-4 flex flex-col gap-4">
+            <div className="h-[400px] sm:h-[485px] overflow-y-auto overflow-x-hidden p-4 flex flex-col gap-4">
               <div>
                 <CardTitle>Servicio de Asistencia</CardTitle>
                 <CardDescription>
-                  Explorar desde una lista de preguntas que las personas suelen hacer
+                  Explorar desde una lista de preguntas que las personas suelen
+                  hacer
                 </CardDescription>
               </div>
               <Separator orientation="horizontal" />
@@ -173,12 +172,12 @@ export const BotWindow = forwardRef<HTMLDivElement, Props>(
             </div>
           </TabsContent>
         </TabsMenu>
-        <div className="flex justify-center ">
+        <div className="flex justify-center py-1">
           <p className="text-gray-400 text-xs">SERSI-IA</p>
         </div>
       </div>
-    )
+    );
   }
-)
+);
 
-BotWindow.displayName = 'BotWindow'
+BotWindow.displayName = "BotWindow";

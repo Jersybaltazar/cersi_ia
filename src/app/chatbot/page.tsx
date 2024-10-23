@@ -5,6 +5,8 @@ type Props = {}
 
 const ChatBot = (props: Props) => {
   return <AiChatBot />
+  
 }
+
 
 export default ChatBot

@@ -12,9 +12,10 @@ type Props = {
     link?: string
   }
   createdAt?: Date
+  domainIcon?:string | null
 }
 
-const Bubble = ({ message, createdAt }: Props) => {
+const Bubble = ({ message, createdAt,domainIcon  }: Props) => {
   let d = new Date()
   const image = extractUUIDFromString(message.content)
   console.log(message.link)
@@ -28,9 +29,13 @@ const Bubble = ({ message, createdAt }: Props) => {
     >
       {message.role == 'assistant' ? (
         <Avatar className="w-5 h-5">
-          <AvatarImage
-            src="https://github.com/shadcn.png"
-            alt="@shadcn"
+         <AvatarImage
+            src={
+              domainIcon  // Mostramos el icono del dominio dinámicamente
+                ? `https://ucarecdn.com/${domainIcon}/`
+                : "https://ucarecdn.com/d24c6b73-55cb-466c-b08f-0cc49c6ce0ec/124599"  // Fallback en caso de que no haya icono
+            }
+            alt="icono del dominio"
           />
           <AvatarFallback>CN</AvatarFallback>
         </Avatar>

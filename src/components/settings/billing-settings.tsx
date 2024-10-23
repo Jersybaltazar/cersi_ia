@@ -1,4 +1,3 @@
-'use client'
 import { onGetSubscriptionPlan } from "@/actions/settings";
 import React from "react";
 import Section from "../section-label";
@@ -11,7 +10,9 @@ import Image from "next/image";
 
 type Props = {};
 
+
 const BillingSettings = async (props: Props) => {
+  
   const plan = await onGetSubscriptionPlan();
   console.log(plan)
   

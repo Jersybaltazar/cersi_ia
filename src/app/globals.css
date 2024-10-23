@@ -100,7 +100,7 @@ body {
 }
 .typing .dot {
   animation: mercuryTypingAnimation 1.8s infinite ease-in-out;
-  background-color: #ffc989;
+  background-color: #93C5FD;
   border-radius: 50%;
   height: 7px;
   margin-right: 4px;
@@ -124,11 +124,11 @@ body {
 @keyframes mercuryTypingAnimation {
   0% {
     transform: translateY(0px);
-    background-color: #ffc989;
+    background-color: #2563EB;
   }
   28% {
     transform: translateY(-7px);
-    background-color: #ffa947;
+    background-color: #60A5FA;
   }
   44% {
     transform: translateY(0px);

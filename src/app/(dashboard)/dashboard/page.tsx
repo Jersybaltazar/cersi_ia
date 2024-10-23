@@ -27,7 +27,7 @@ const Page = async (props: Props) => {
   const plan = await getUserPlanInfo()
   const transactions = await getUserTransactions()
   const products = await getUserTotalProductPrices()
-
+  console.log(transactions)
   return (
     <>
       <InfoBar />

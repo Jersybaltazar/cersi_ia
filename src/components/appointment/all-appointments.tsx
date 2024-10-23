@@ -32,14 +32,14 @@ const AllAppointments = ({ bookings }: Props) => {
             <TableCell>{booking.email}</TableCell>
             <TableCell>
               <div>
-                {getMonthName(booking.date.getMonth())} {booking.date.getDate()}{' '}
+                {getMonthName(booking.date.getMonth() + 1 )} {booking.date.getDate()}{' '}
                 {booking.date.getFullYear()}
               </div>
               <div className="uppercase">{booking.slot}</div>
             </TableCell>
             <TableCell>
               <div>
-                {getMonthName(booking.createdAt.getMonth())}{' '}
+                {getMonthName(booking.createdAt.getMonth() + 1)}{' '}
                 {booking.createdAt.getDate()} {booking.createdAt.getFullYear()}
               </div>
               <div>

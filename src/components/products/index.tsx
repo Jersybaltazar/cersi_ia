@@ -25,8 +25,8 @@ const ProductTable = ({ id, products }: Props) => {
   return (
     <div>
       <div>
-        <h2 className="font-bold text-2xl">Productos</h2>
-        <p className="text-sm font-light">
+        <h2 className="font-bold text-2xl mb-5">Productos</h2>
+        <p className="text-sm font-light mb-3">
         Agregue productos a su tienda y configúrelos para aceptar pagos de los clientes.
         </p>
       </div>
@@ -45,7 +45,7 @@ const ProductTable = ({ id, products }: Props) => {
             <SideSheet
               description="Agregue productos a su tienda y configúrelos para aceptar pagos de los clientes."
               title="Añade un producto"
-              className="flex items-center gap-2 bg-orange px-4 py-2 text-black font-semibold rounded-lg text-sm"
+              className="flex items-center gap-2 bg-purple-600 px-4 py-2 text-black font-semibold rounded-lg text-sm"
               trigger={
                 <>
                   <Plus

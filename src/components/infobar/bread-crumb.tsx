@@ -28,7 +28,7 @@ const BreadCrumb = (props: Props) => {
             <Switch
               defaultChecked={realtime}
               onClick={(e) => onActivateRealtime(e)}
-              className="data-[state=checked]:bg-purple-900 data-[state=unchecked]:bg-peach"
+              className="data-[state=checked]:bg-purple-900 data-[state=unchecked]:bg-purple-200"
             />
           </Loader>
         )}
@@ -41,7 +41,7 @@ const BreadCrumb = (props: Props) => {
           : page == 'appointment'
           ? 'Ver y editar todas tus citas.'
           : page == 'email-marketing'
-          ? 'Envié correos electronicos masivos a tus cliente.s'
+          ? 'Envié correos electronicos masivos a tus clientes'
           : page == 'integration'
           ? 'Conecte aplicaciones de terceros a SERSI-AI.'
           : 'Modifica la configuración del dominio , cambia las opciones del chatbot, ingrese preguntas de ventas y entrena a tu bot para que haga lo que quieras.'}

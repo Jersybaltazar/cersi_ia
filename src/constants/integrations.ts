@@ -1,6 +1,6 @@
 type IntegrationsListItemProps = {
     id: string
-    name: 'stripe'
+    name: 'stripe' | 'mercadopago'
     logo: string
     description: string
     title: string
@@ -14,6 +14,16 @@ type IntegrationsListItemProps = {
       description:
         'Stripe es la forma más rápida y sencilla de integrar pagos y servicios financieros en su plataforma de software o mercado.',
       logo: 'a5418b3f-ca7e-477a-a00a-832116ee58ba',
+      title: 'Connectar cuenta  de Stripe',
+      modalDescription:
+        'Las plataformas y mercados más exitosos del mundo, incluidos Shopify y DoorDash, utilizan Stripe Connect.',
+    },
+    {
+      id: '2',
+      name: 'mercadopago',
+      description:
+        'Stripe es la forma más rápida y sencilla de integrar pagos y servicios financieros en su plataforma de software o mercado.',
+      logo: '97da4699-cf87-4a71-b3d4-6ef5d8f86bbf',
       title: 'Connectar cuenta  de Stripe',
       modalDescription:
         'Las plataformas y mercados más exitosos del mundo, incluidos Shopify y DoorDash, utilizan Stripe Connect.',

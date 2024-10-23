@@ -147,13 +147,13 @@ export const getUserTransactions = async () => {
           clerkId: user.id,
         },
         select: {
-          mercadoPagoId: true,
+          stripeId: true,
         },
       })
 
       if (connectedStripe) {
         const transactions = await stripe.charges.list({
-          stripeAccount: connectedStripe.mercadoPagoId!,
+          stripeAccount: connectedStripe.stripeId!,
         })
         if (transactions) {
           return transactions

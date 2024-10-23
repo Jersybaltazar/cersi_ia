@@ -50,6 +50,7 @@ export const onGetCurrentChatBot = async (id: string) => {
             helpdesk: true,
           },
         },
+        icon:true,
       },
     });
 

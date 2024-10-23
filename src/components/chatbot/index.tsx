@@ -25,7 +25,7 @@ const AiChatBot = (props: Props) => {
   } = useChatBot()
 
   return (
-    <div className="h-screen flex flex-col justify-end items-end gap-4">
+    <div className="h-screen flex flex-col justify-end items-end gap-2 w-full">
       {botOpened && (
         <BotWindow
           errors={errors}
@@ -33,6 +33,7 @@ const AiChatBot = (props: Props) => {
           realtimeMode={onRealTime}
           helpdesk={currentBot?.helpdesk!}
           domainName={currentBot?.name!}
+          icon={currentBot?.icon}
           ref={messageWindowRef}
           help={currentBot?.chatBot?.helpdesk}
           theme={currentBot?.chatBot?.background}
@@ -45,7 +46,7 @@ const AiChatBot = (props: Props) => {
       )}
       <div
         className={cn(
-          'rounded-full relative cursor-pointer shadow-md w-20 h-20 flex items-center justify-center bg-white',
+          'rounded-full relative cursor-pointer shadow-md w-20 h-20 xs:w-16 xs:h-16 flex items-center justify-center bg-white overflow-hidden',
           loading ? 'invisible' : 'visible'
         )}
         onClick={onOpenChatBot}
@@ -54,6 +55,7 @@ const AiChatBot = (props: Props) => {
           <Image
             src={`https://ucarecdn.com/${currentBot.chatBot.icon}/`}
             alt="bot"
+            className="object-cover"
             fill
           />
         ) : (
