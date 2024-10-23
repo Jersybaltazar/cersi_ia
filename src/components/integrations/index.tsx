@@ -7,7 +7,8 @@ import IntegrationTrigger from './IntegrationTrigger'
 
 type Props = {
   connections: {
-    stripe: boolean
+    stripe: boolean,
+    mercadopago:boolean
   }
 }
 

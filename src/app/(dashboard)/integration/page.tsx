@@ -2,11 +2,14 @@ import { onGetPaymentConnected } from '@/actions/settings'
 import InfoBar from '@/components/infobar'
 import IntegrationsList from '@/components/integrations'
 
+
 const IntegrationsPage = async () => {
   const payment = await onGetPaymentConnected()
+  const paymentMercadoPago = await onGetPaymentConnected()
 
   const connections = {
     stripe: payment ? true : false,
+    mercadopago:paymentMercadoPago ? true : false
   }
 
   return (

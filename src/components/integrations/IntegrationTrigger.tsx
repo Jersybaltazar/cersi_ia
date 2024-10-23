@@ -4,14 +4,16 @@ import { CloudIcon } from 'lucide-react'
 import { Separator } from '../ui/separator'
 import Modal from '../mondal'
 import { IntegrationModalBody } from './integration-modal-body'
+import mercadopago from 'mercadopago'
 
 type Props = {
-  name: 'stripe'
+  name: 'stripe' | 'mercadopago'
   logo: string
   title: string
   descrioption: string
   connections: {
-    [key in 'stripe']: boolean
+    stripe: boolean,
+    mercadopago:boolean
   }
 }
 
@@ -31,7 +33,7 @@ const IntegrationTrigger = ({
       trigger={
         <Card className="px-3 py-2 cursor-pointer flex gap-2">
           <CloudIcon />
-          {connections[name] ? 'conectado' : 'conectar'}
+          {connections[name as 'stripe' | 'mercadopago'] ? 'conectado' : 'conectar'}
         </Card>
       }
     >
