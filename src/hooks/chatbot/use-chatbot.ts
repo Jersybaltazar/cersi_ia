@@ -209,11 +209,7 @@ export const useRealTime = (
       }[]
     >
   >,
-  setOnRealTime: React.Dispatch<
-  React.SetStateAction<
-    { chatroom: string; mode: boolean } | undefined
-    >
-  >,    
+      
 ) => {
   const counterRef = useRef(1);
 
