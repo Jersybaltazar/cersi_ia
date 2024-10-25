@@ -122,7 +122,7 @@ export const useChatBot = () => {
           },
         ]);
       }
-
+      console.log('onRealTime:', onRealTime);
       console.log("🟡 RESPONSE FROM UC", uploaded.uuid);
       setOnAiTyping(true);
       const response = await onAiChatBotAssistant(
@@ -208,15 +208,19 @@ export const useRealTime = (
         link?: string | undefined;
       }[]
     >
-  >
+  >,
+  setOnRealTime: React.Dispatch<
+  React.SetStateAction<
+    { chatroom: string; mode: boolean } | undefined
+    >
+  >,    
 ) => {
   const counterRef = useRef(1);
 
   useEffect(() => {
     pusherClient.subscribe(chatRoom);
     pusherClient.bind("realtime-mode", (data: any) => {
-      console.log("✅", data);
-      if (counterRef.current !== 1) {
+      console.log("✅", data);      
         setChats((prev: any) => [
           ...prev,
           {
@@ -224,7 +228,6 @@ export const useRealTime = (
             content: data.chat.message,
           },
         ]);
-      }
       counterRef.current += 1;
     });
     return () => {
