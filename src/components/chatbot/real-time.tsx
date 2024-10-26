@@ -19,9 +19,10 @@ const RealTimeMode = ({ chatRoomId, setChats }: Props) => {
  useRealTime(chatRoomId, setChats)
 
   return (
-    <Card className="px-3 rounded-full py-1 bg-purple-900 font-bold text-white text-sm">
-      En tiempo real
-    </Card>
+    <Card className="flex justify-center items-center px-4 py-1 rounded-full bg-purple-900 font-bold text-white text-sm">
+  En tiempo real
+</Card>
+
   )
 }
 

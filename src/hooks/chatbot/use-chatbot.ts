@@ -181,6 +181,45 @@ export const useChatBot = () => {
       }
     }
   });
+  useEffect(() => {
+    if (onRealTime?.chatroom) {
+      // Suscribirse al canal del chatroom
+      pusherClient.subscribe(onRealTime.chatroom);
+
+      // Escuchar el evento 'realtime-mode-updated' para cambios en el modo en tiempo real
+      pusherClient.bind("realtime-mode-updated", (data: any) => {
+        if (!data.live) {
+          // El modo en tiempo real se ha desactivado
+          setOnRealTime(undefined);
+          // Opcional: notificar al usuario que el chat en tiempo real ha finalizado
+        } else {
+          // El modo en tiempo real sigue activo
+          setOnRealTime((prev) => ({
+            ...prev!,
+            mode: data.live,
+          }));
+        }
+      });
+
+      // Escuchar mensajes en tiempo real
+      pusherClient.bind("realtime-mode", (data: any) => {
+        setOnChats((prev) => [
+          ...prev,
+          {
+            role: data.chat.role,
+            content: data.chat.message,
+          },
+        ]);
+      });
+
+      return () => {
+        // Limpiar suscripciones
+        pusherClient.unbind("realtime-mode-updated");
+        pusherClient.unbind("realtime-mode");
+        pusherClient.unsubscribe(onRealTime.chatroom);
+      };
+    }
+  }, [onRealTime?.chatroom]);
 
   return {
     botOpened,
@@ -209,7 +248,7 @@ export const useRealTime = (
       }[]
     >
   >,
-      
+  
 ) => {
   const counterRef = useRef(1);
 

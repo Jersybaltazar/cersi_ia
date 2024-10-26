@@ -19,6 +19,9 @@ export const onToggleRealtime = async (id: string, state: boolean) => {
     })
 
     if (chatRoom) {
+      pusherServer.trigger(chatRoom.id, 'realtime-mode-updated', {
+        live: chatRoom.live,
+      });
       return {
         status: 200,
         message: chatRoom.live

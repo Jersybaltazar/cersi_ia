@@ -90,9 +90,9 @@ export const BotWindow = forwardRef<HTMLDivElement, Props>(
                 <AvatarFallback>CN</AvatarFallback>
               </Avatar>
             </div>
-            <div className="flex flex-col justify-center">
+            <div className="flex flex-col items-center">
               <h3 className="text-base sm:text-lg font-bold leading-tight">
-                Representante de ventas de:
+                Representante de ventas en:
               </h3>
               <p className="text-sm">{domainName.split(".com")[0]}</p>
               {realtimeMode?.mode && (
