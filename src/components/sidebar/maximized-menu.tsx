@@ -4,7 +4,7 @@ import Image from 'next/image'
 import React from 'react'
 import DomainMenu from './domain-menu'
 import MenuItem from './menu-item'
-
+import Link from "next/link"; 
 type Props = {
   onExpand(): void
   current: string
@@ -23,6 +23,7 @@ const MaxMenu = ({ current, domains, onExpand, onSignOut }: Props) => {
   return (
     <div className="py-3 px-4 flex flex-col h-full">
       <div className="flex justify-between items-center">
+      <Link href="/"> 
         <Image
           src="/svg/LogoNombre.svg"
           alt="LOGO"
@@ -32,6 +33,7 @@ const MaxMenu = ({ current, domains, onExpand, onSignOut }: Props) => {
           width={100}
           height={100}
         />
+            </Link>
         <Menu
           className="cursor-pointer animate-fade-in opacity-0 delay-300 fill-mode-forwards"
           onClick={onExpand}

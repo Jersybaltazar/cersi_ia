@@ -12,6 +12,8 @@ import {
 } from '@stripe/react-stripe-js'
 import { useRouter } from 'next/navigation'
 
+
+
 export const useStripe = () => {
   const [onStripeAccountPending, setOnStripeAccountPending] =
     useState<boolean>(false)
@@ -129,8 +131,6 @@ export const useStripeElements = (payment: 'STANDARD' | 'PRO' | 'ULTIMATE') => {
 }
 
 
-
-
 export const useCompleteMercadoPagoPayment = (initPoint: string) => {
   const onMakePayment = (e: React.FormEvent) => {
     e.preventDefault();
@@ -181,7 +181,6 @@ export const useMercadoPagoElements = (payment: 'STANDARD' | 'PRO' | 'ULTIMATE')
   const [mp, setMp] = useState(null);
 
   useEffect(() => {
-    const loadMP = async () => {
       const script = document.createElement('script');
       script.src = 'https://sdk.mercadopago.com/js/v2';
       script.async = true;
@@ -189,7 +188,7 @@ export const useMercadoPagoElements = (payment: 'STANDARD' | 'PRO' | 'ULTIMATE')
 
       script.onload = () => {
         const mpInstance = new window.MercadoPago(process.env.NEXT_PUBLIC_MERCADOPAGO_PUBLIC_KEY, {
-          locale: 'es-AR',
+          locale: 'es-PE',
         });
         setMp(mpInstance);
         setLoading(false);
@@ -203,13 +202,9 @@ export const useMercadoPagoElements = (payment: 'STANDARD' | 'PRO' | 'ULTIMATE')
       return () => {
         document.body.removeChild(script);
       };
-    };
+      
 
-    if (payment !== 'STANDARD') {
-      loadMP();
-    } else {
-      setLoading(false);
-    }
+
   }, [payment]);
 
   return { loading, mp };
@@ -270,36 +265,42 @@ type UseCompletePaymentMercadoPagoProps = {
   plan: 'STANDARD' | 'PRO' | 'ULTIMATE'
   cardFormInstance: any;
   amount:string;
+
 }
 export const useCompletePaymentMercadoPago = ({plan,cardFormInstance,amount}:UseCompletePaymentMercadoPagoProps) => {
   
   const [processing, setProcessing] = useState<boolean>(false)
   const router = useRouter()
   const { toast } = useToast()
+  
 
-  const onMakePayment = async (e: React.FormEvent) => {
-    e.preventDefault();
-    console.log('Amount recibido:', amount);
+  const onMakePayment = async (cardData: any) => {
+    console.log('Card Token:', cardData.token);
     
-    if (!cardFormInstance) {
-      console.error('Card form instance is not initialized');
+    if (!cardData || !cardData.token) {
+      console.error('Datos de tarjeta no disponibles');
       return;
     }
-
     try {
       setProcessing(true);
 
       const cardData = cardFormInstance.getCardFormData();
       console.log(cardData)
       console.log('Token de la tarjeta', cardData.token)
+          
+      if (!cardData.token) {
+        console.error('Token de tarjeta no recibido');
+        return;
+      }
       // Preparar los datos del pago
       const paymentData = {
         transaction_amount: Number(amount),
-        token: cardData.token,
+        token: cardData.token, 
         description: `Suscripción ${plan}`,
         installments: Number(cardData.installments),
         payment_method_id: cardData.paymentMethodId,
         issuer_id: cardData.issuerId,
+        processing_mode: cardData.processingMode,
         payer: {
           email: cardData.cardholderEmail,
           identification: {
@@ -307,9 +308,18 @@ export const useCompletePaymentMercadoPago = ({plan,cardFormInstance,amount}:Use
             number: cardData.identificationNumber,
           },
         },
+        cardholder:{
+          name: cardData.cardholderName,
+          identification: {
+            type: cardData.identificationType,
+            number: cardData.identificationNumber,
+
+          },
+        }
       };
 
-      console.log('paymentData:', paymentData.token );
+      console.log('paymentData a enviar:', JSON.stringify(paymentData, null, 2));
+      
       const result = await onProcessPayment(paymentData, plan);
 
       if (result.status === 'approved') {
@@ -319,6 +329,7 @@ export const useCompletePaymentMercadoPago = ({plan,cardFormInstance,amount}:Use
         });
         router.push('/settings');
       } else {
+        console.error('Error en el resultado del pago:', result);
         toast({
           title: 'Error en el Pago',
           description: result.message || 'No se pudo procesar el pago.',

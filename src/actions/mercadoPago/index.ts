@@ -1,5 +1,5 @@
 'use server'
-import {MercadoPagoConfig, Payment} from 'mercadopago';
+import {MercadoPagoConfig, Payment, CardToken} from 'mercadopago';
 import { client } from '@/lib/prisma'
 import { currentUser } from '@clerk/nextjs'
 import { v4 as uuidv4 } from 'uuid';
@@ -11,7 +11,6 @@ const payment = new Payment(mercadoPago);
 
 export const onProcessPayment = async (paymentData: any, plan: 'STANDARD' | 'PRO' | 'ULTIMATE') => {
       console.log('paymentData recibido:', paymentData);
-      console.log('transaction_amount:', paymentData.transaction_amount);
     try {
       const user = await currentUser();
       if (!user) throw new Error('Usuario no autenticado');
@@ -36,7 +35,8 @@ export const onProcessPayment = async (paymentData: any, plan: 'STANDARD' | 'PRO
             idempotencyKey:idempotencyKey,
         }   
       });
-  
+      
+      console.log("Respuesta completa de Mercado Pago:", JSON.stringify(response, null, 2));
       if (response.status === 'approved') {
         // Actualizar la suscripción del usuario
         const update = await client.user.update({
@@ -60,11 +60,13 @@ export const onProcessPayment = async (paymentData: any, plan: 'STANDARD' | 'PRO
           plan: update.subscription?.plan,
         };
       } else {
+        console.error("Error en el pago:", response);
         return {
           status: response.status,
           message: response.status_detail,
         };
       }
+      
     } catch (error: any) {
       console.error('Error en onProcessPayment:', error);
       return { status: 'error', message: error.message };

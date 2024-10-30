@@ -11,9 +11,8 @@ type MercadoPagoFormProps = {
 };
 
 export const MercadoPagoForm = ({ plan,  mp  }: MercadoPagoFormProps) => {
-  const [cardFormInstance, setCardFormInstance] = useState<any>(null);
 
-  console.log(plan)
+  const [cardFormInstance, setCardFormInstance] = useState<any>(null);
 
 
       let amount = '0.00';
@@ -27,15 +26,17 @@ export const MercadoPagoForm = ({ plan,  mp  }: MercadoPagoFormProps) => {
         default:
           amount = '0.00';
       }
-      console.log('Plan:', plan);
-      console.log('Amount:', amount);
+
       const {processing, onMakePayment} = useCompletePaymentMercadoPago({
         plan,
         cardFormInstance,
         amount,
+
       });
+
       useEffect(() => {
-        if (!mp|| cardFormInstance) return;
+        if (!mp) return;
+        if ( cardFormInstance) return
       const cardForm = mp.cardForm({
         amount: amount,
         form: {
@@ -43,13 +44,14 @@ export const MercadoPagoForm = ({ plan,  mp  }: MercadoPagoFormProps) => {
           cardholderName: { id: 'form-checkout__cardholderName' },
           cardholderEmail: { id: 'form-checkout__cardholderEmail' },
           cardNumber: { id: 'form-checkout__cardNumber' },
-          cardExpirationDate: { id: 'form-checkout__cardExpirationDate' },
+          expirationDate: { id: 'form-checkout__expirationDate' },
           securityCode: { id: 'form-checkout__securityCode' },
           identificationType: { id: 'form-checkout__identificationType' },
           identificationNumber: { id: 'form-checkout__identificationNumber' },
           issuer: { id: 'form-checkout__issuer' },
           installments: { id: 'form-checkout__installments' },
         },
+
         callbacks: {
           onFormMounted: (error: any) => {
             if (error) {
@@ -59,26 +61,42 @@ export const MercadoPagoForm = ({ plan,  mp  }: MercadoPagoFormProps) => {
             }
             
           },
-          onCardTokenReceived: (error:any, token:any) => {
-            if (error) {
-              console.error('Error al recibir el token:', error);
-              // Mostrar mensaje al usuario si es necesario
-            } else {
-              console.log('Token recibido:', token);
-            }
-          },
-
         },
       });
 
       setCardFormInstance(cardForm);
     
-  }, [mp,plan, cardFormInstance]);
+  }, [mp, amount, cardFormInstance, processing]);
 
+  const handleSubmit = async (e: React.FormEvent) => {
+    e.preventDefault();
+    if (processing) return;
+    if (!cardFormInstance) {
+      console.error('Card form instance is not initialized');
+      return;
+    }
+  
+    try {
+      const cardData = await cardFormInstance.createCardToken();
+  
+      if (cardData.error) {
+        console.error('Error al generar el token:', cardData.error);
 
+        return;
+      }
+  
+      console.log('Token recibido:', cardData.token);
+  
+      // Proceder con el procesamiento del pago
+      await onMakePayment(cardData);
+    } catch (error) {
+      console.error('Error al procesar el pago:', error);
+    }
+  };
+  
 
   return (
-    <form onSubmit={onMakePayment} className="flex flex-col gap-5" id="form-checkout">
+    <form onSubmit={handleSubmit} className="flex flex-col gap-5" id="form-checkout">
     <div>
       <h2 className="font-semibold text-xl text-white">Método de Pago</h2>
       <CardDescription>Ingresa los datos de tu tarjeta</CardDescription>
@@ -92,7 +110,7 @@ export const MercadoPagoForm = ({ plan,  mp  }: MercadoPagoFormProps) => {
     <input
       type="text"
       name="cardExpirationDate"
-      id="form-checkout__cardExpirationDate"
+      id="form-checkout__expirationDate"
       placeholder="MM/YY"
     />
     <input
@@ -117,6 +135,7 @@ export const MercadoPagoForm = ({ plan,  mp  }: MercadoPagoFormProps) => {
       <option value="DNI"></option>
     </select>
     <input
+  
       type="text"
       name="identificationNumber"
       id="form-checkout__identificationNumber"

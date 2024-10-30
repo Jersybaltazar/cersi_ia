@@ -1,3 +1,5 @@
+'use client'
+import { useState, useEffect } from "react";
 import Image from "next/image";
 import Navbar from "../components/navbar";
 import { Button } from "@/components/ui/button";
@@ -16,17 +18,33 @@ import { pricingCards } from "@/constants/landing-page";
 import { getMonthName } from "@/lib/utils";
 import parse from "html-react-parser";
 import { onGetBlogPosts } from "@/actions/landing";
+import { useRouter } from "next/navigation";
+import { useAuth } from "@clerk/nextjs";
 
-export default async function Home() {
-  const posts:
-    | {
-        id: string;
-        title: string;
-        image: string;
-        content: string;
-        createdAt: Date;
-      }[]
-    | undefined = await onGetBlogPosts();
+export default  function Home() {
+  const router = useRouter();
+  const { isSignedIn } = useAuth();
+  const [posts, setPosts] = useState<{ id: string; title: string; image: string; content: string; createdAt: Date }[]>([]);
+
+  useEffect(() => {
+    const fetchPosts = async () => {
+      const data = await onGetBlogPosts();
+      if (data) setPosts(data);
+    };
+
+    fetchPosts();
+  }, []);
+
+    const handlePlanClick = (planTitle:any) => {
+      if (isSignedIn) {
+        // Si el usuario está logeado, redirigir al dashboard con el plan seleccionado
+        router.push(`/settings?plan=${planTitle}`);
+      } else {
+        // Si no está logeado, redirigir a la página de inicio de sesión
+        router.push("/auth/sign-in");
+      }
+    }; 
+
   return (
     <main>
       <Navbar />
@@ -40,11 +58,12 @@ export default async function Home() {
             SERSI-AI
           </h1>
           <p className="text-center max-w-[600px] font-bold mb-10">
-            Descubra el poder de SERSI-AI , su asistente virtual personalizado e impulsado por potentes modelos de inteligencia artificial. Incruste SERSI-AI en
-            cualquier sitio web ¡Con solo un fragmento de código!{" "}
+            Descubra el poder de SERSI-AI , su asistente virtual personalizado e
+            impulsado por potentes modelos de inteligencia artificial. Incruste
+            SERSI-AI en cualquier sitio web ¡Con solo un fragmento de código!{" "}
           </p>
           <Button className="bg-purple-900  font-bold text-white py-3 px-6 mb-10">
-          Iniciar Prueba Gratuita
+            Iniciar Prueba Gratuita
           </Button>
           <Image
             src="/images/Captura.png"
@@ -71,7 +90,7 @@ export default async function Home() {
           <Card
             key={card.title}
             className={clsx("w-[300px] flex flex-col justify-between", {
-              "border-2 border-primary": card.title === "Unlimited",
+              "border-2 border-primary": card.title === "PRO",
             })}
           >
             <CardHeader>
@@ -82,9 +101,11 @@ export default async function Home() {
             </CardHeader>
             <CardContent>
               <span className="text-4xl font-bold">{card.price}</span>
-              <span className="text-muted-foreground">
-                <span>/ mes</span>
-              </span>
+              {card.title !== "ULTIMATE" && (
+                <span className="text-muted-foreground">
+                  <span>/mes</span>
+                </span>
+              )}
             </CardContent>
             <CardFooter className="flex flex-col items-start gap-4">
               <div>
@@ -95,20 +116,29 @@ export default async function Home() {
                   </div>
                 ))}
               </div>
-              <Link
-                href={`/dashbord?plan=${card.title}`}
-                className="bg-purples/20  border-purple-800 border-2 p-2 w-full text-center font-bold rounded-md"
-              >
-                Empezar Ahora
-              </Link>
+              {card.title !== "ULTIMATE" ? (
+                <button
+                onClick={() => handlePlanClick(card.title)}
+                  className="bg-purples/20 border-purple-800 border-2 p-2 w-full text-center font-bold rounded-md"
+                >
+                  Empezar Ahora
+                </button>
+              ) : (
+                <Link
+                  href="/"
+                  className="bg-purples/20 border-purple-800 border-2 p-2 w-full text-center font-bold rounded-md"
+                >
+                  Contáctenos
+                </Link>
+              )}
             </CardFooter>
           </Card>
         ))}
       </div>
       <section className="flex justify-center items-center flex-col gap-4 mt-28">
-        <h2 className="text-4xl text-center">News Room</h2>
+        <h2 className="text-4xl text-center">Sala de Noticias</h2>
         <p className="text-muted-foreground text-center max-w-lg">
-          Explore our insights on AI, technology, and optimizing your business.
+          Explore nuestros conocimientos sobre IA, tecnologia y optimizacion para su negocio.
         </p>
       </section>
       <section className="md:grid-cols-3 grid-cols-1 grid gap-5 container mt-8">

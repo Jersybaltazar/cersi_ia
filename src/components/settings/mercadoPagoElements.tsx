@@ -3,7 +3,7 @@
 import React from 'react'; 
 import { Loader } from '../loader'
 import {useMercadoPagoElements} from '@/hooks/billling/use-billing'
-import { MercadoPagoForm } from './mercadopago-form'; // Tu formulario personalizado
+import { MercadoPagoForm } from './mercadopago-form';
 
 
 type MercadoPagoElementsProps = {
@@ -13,8 +13,6 @@ type MercadoPagoElementsProps = {
 export const MercadoPagoElements = ({ payment }: MercadoPagoElementsProps) => {
   
   const { loading, mp } = useMercadoPagoElements(payment);
-  console.log(mp)
-  console.log(payment)
   
   return  ( 
     (payment === 'PRO' || payment === 'ULTIMATE') && (

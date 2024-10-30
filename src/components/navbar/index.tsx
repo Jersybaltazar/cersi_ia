@@ -9,6 +9,7 @@ function NavBar() {
       <Header />
       <div className="sticky top-0 backdrop-blur-sm flex gap-8 justify-between items-center px-10 py-3 font-bold border-b border-solid border-zinc-100 leading-[154.5%] max-md:flex-wrap max-md:px-5">
         <div className="flex gap-1.5 items-center justify-between self-stretch my-auto text-2xl tracking-tighter text-neutral-700">
+        <Link href="/"> 
           <Image
             src="/svg/Logo.svg"
             alt="LOGO"
@@ -21,6 +22,7 @@ function NavBar() {
             width={0}
             height={0}
           />
+              </Link>
         </div>
 
         <ul className="justifify-between self-stretch my-auto text-sm leading-5 text-neutral-500 max-md:flex-wrap max-md:max-w-full font-normal gap-8 hidden md:flex text-black/60 items-center">

@@ -2,7 +2,7 @@ import { currentUser } from "@clerk/nextjs";
 import Image from "next/image";
 import { redirect } from "next/navigation";
 import React from "react";
-
+import Link from "next/link"; 
 type Props = {
   children: React.ReactNode;
 };
@@ -13,7 +13,8 @@ const Layout = async ({ children }: Props) => {
   return (
     <div className="h-screen flex w-full justify-center">
       <div className="w-[600px] ld:w-full flex flex-col items-start p-6">
-      <Image
+        <Link href="/"> 
+        <Image
             src="/svg/Logo.svg"
             alt="LOGO"
             sizes="100vw"
@@ -25,6 +26,7 @@ const Layout = async ({ children }: Props) => {
             width={0}
             height={0}
           />
+        </Link>
         {children}
       </div>
       <div className="hidden lg:flex flex-1 w-full max-h-full max-w-4000px overflow-hidden relative bg-cream flex-col pt-10 pl-24 gap-3">
