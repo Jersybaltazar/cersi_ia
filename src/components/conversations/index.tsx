@@ -32,10 +32,10 @@ const ConversationMenu = ({ domains }: Props) => {
             domains={domains}
             register={register}
           />
-          <div className="flex flex-col">
+          <div className="flex flex-col h-[85vh] overflow-y-auto">
             <Loader loading={loading}>
               {chatRooms.length ? (
-                chatRooms.map((room) => (
+                chatRooms.map((room,index) => (
                   <ChatCard
                     seen={room.chatRoom[0].message[0]?.seen}
                     id={room.chatRoom[0].id}
@@ -44,6 +44,7 @@ const ConversationMenu = ({ domains }: Props) => {
                     key={room.chatRoom[0].id}
                     title={room.email!}
                     description={room.chatRoom[0].message[0]?.message}
+                    className={index >= 10 ? 'blurred' : ''}
                   />
                 ))
               ) : (

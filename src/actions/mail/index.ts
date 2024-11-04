@@ -135,6 +135,9 @@ export const onAddCustomersToEmail = async (
 }
 
 export const onBulkMailer = async (email: string[], campaignId: string) => {
+
+
+  
   try {
     const user = await currentUser()
     if (!user) return null

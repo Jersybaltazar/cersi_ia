@@ -7,11 +7,45 @@ import { v4 as uuidv4 } from 'uuid';
 const mercadoPago = new MercadoPagoConfig({accessToken: process.env.ACCESS_TOKEN!,});
 const payment = new Payment(mercadoPago);
 
+const validatePaymentData = (data: any) => {
+  if (!data) throw new Error('paymentData es requerido');
+
+  // Campos requeridos de primer nivel
+  const requiredFields = [
+    'transaction_amount',
+    'token',
+    'description',
+    'installments',
+    'payment_method_id',
+    'issuer_id'
+  ];
+
+  for (const field of requiredFields) {
+    if (data[field] === undefined || data[field] === null) {
+      throw new Error(`El campo ${field} es requerido en paymentData`);
+    }
+  }
+
+  // Validación de campos anidados en `payer`
+  if (!data.payer || typeof data.payer !== 'object') {
+    throw new Error('El campo payer es requerido y debe ser un objeto en paymentData');
+  }
+
+  if (!data.payer.email) {
+    throw new Error('El campo payer.email es requerido en paymentData');
+  }
+
+  if (!data.payer.identification) {
+    throw new Error('El campo payer.identification es requerido en paymentData');
+  }
+};
+
 
 
 export const onProcessPayment = async (paymentData: any, plan: 'STANDARD' | 'PRO' | 'ULTIMATE') => {
       console.log('paymentData recibido:', paymentData);
     try {
+      validatePaymentData(paymentData);
       const user = await currentUser();
       if (!user) throw new Error('Usuario no autenticado');
 
@@ -37,6 +71,7 @@ export const onProcessPayment = async (paymentData: any, plan: 'STANDARD' | 'PRO
       });
       
       console.log("Respuesta completa de Mercado Pago:", JSON.stringify(response, null, 2));
+
       if (response.status === 'approved') {
         // Actualizar la suscripción del usuario
         const update = await client.user.update({
@@ -58,6 +93,7 @@ export const onProcessPayment = async (paymentData: any, plan: 'STANDARD' | 'PRO
           status: 'approved',
           message: 'Pago aprobado y suscripción actualizada',
           plan: update.subscription?.plan,
+          
         };
       } else {
         console.error("Error en el pago:", response);

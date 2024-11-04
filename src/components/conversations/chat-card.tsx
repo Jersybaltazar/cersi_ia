@@ -13,6 +13,7 @@ type Props = {
   id: string
   onChat(): void
   seen?: boolean
+  className?: string
 }
 
 const ChatCard = ({
@@ -22,13 +23,14 @@ const ChatCard = ({
   onChat,
   id,
   seen,
+  className, 
 }: Props) => {
   const { messageSentAt, urgent } = useChatTime(createdAt, id)
 
   return (
     <Card
       onClick={onChat}
-      className="rounded-none border-r-0 hover:bg-muted cursor-pointer transition duration-150 ease-in-out"
+      className={`rounded-none border-r-0 hover:bg-muted cursor-pointer transition duration-150 ease-in-out ${className}`}
     >
       <CardContent className="py-4 flex gap-3">
         <div>

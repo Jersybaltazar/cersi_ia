@@ -110,6 +110,8 @@ import {
     }
   
     const onBulkEmail = async (emails: string[], campaignId: string) => {
+      const emailCount = emails.length;
+      
       try {
         const mails = await onBulkMailer(emails, campaignId)
         if (mails) {

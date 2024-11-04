@@ -72,8 +72,8 @@ export const useChatBot = () => {
   useEffect(() => {
     postToParent(
       JSON.stringify({
-        width: botOpened ? 550 : 80,
-        height: botOpened ? 800 : 80,
+        width: botOpened ? 400 : 80,
+        height: botOpened ? 700 : 80,
       })
     );
   }, [botOpened]);

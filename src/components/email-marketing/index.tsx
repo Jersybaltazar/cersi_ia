@@ -64,6 +64,7 @@ const EmailMarketing = ({ campaign, domains, subscription }: Props) => {
         onSelect={onSelectedEmails}
         select={isSelected}
         id={isId}
+        subscriptionPlan={subscription?.plan || 'STANDARD'}
       />
       <div>
         <div className="flex gap-3 justify-end">

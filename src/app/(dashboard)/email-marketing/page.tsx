@@ -11,6 +11,8 @@ const Page = async (props: Props) => {
 
   if (!user) return null
   const customers = await onGetAllCustomers(user.id)
+  console.log(customers)
+
   const campaigns = await onGetAllCampaigns(user.id)
 
   return (

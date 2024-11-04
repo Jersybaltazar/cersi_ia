@@ -12,12 +12,13 @@ const config = {
   theme: {
     container: {
       center: true,
-      padding: "4rem",
-      screens: {
-        xs: "320px", // Para pantallas móviles muy pequeñas
-        sm: "640px", // Tamaño común para móviles
-        md: "768px",
-        "2xl": "1400px",
+      padding: {
+        DEFAULT: "1rem",   // Para pantallas pequeñas
+        sm: "2rem",        // Desde 640px en adelante
+        md: "4rem",        // Desde 768px en adelante
+        lg: "6rem",        // Desde 1024px en adelante
+        xl: "8rem",        // Desde 1280px en adelante
+        "2xl": "10rem",    // Desde 1400px en adelante
       },
     },
     extend: {

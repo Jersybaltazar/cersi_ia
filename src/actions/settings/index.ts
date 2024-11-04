@@ -54,7 +54,7 @@ export const onIntegrateDomain = async (domain: string, icon: string) => {
                 icon,
                 chatBot: {
                   create: {
-                    welcomeMessage: 'Hey there, have  a question? Text us here',
+                    welcomeMessage: 'Hola, ¿tienes alguna pregunta? Envíanos un mensaje',
                   },
                 },
               },
@@ -63,18 +63,18 @@ export const onIntegrateDomain = async (domain: string, icon: string) => {
         })
 
         if (newDomain) {
-          return { status: 200, message: 'Domain successfully added' }
+          return { status: 200, message: 'Dominio añadido correctamente' }
         }
       }
       return {
         status: 400,
         message:
-          "You've reached the maximum number of domains, upgrade your plan",
+          "Has alcanzado el número máximo de dominios, actualiza tu plan",
       }
     }
     return {
       status: 400,
-      message: 'Domain already exists',
+      message: 'El dominio ya existe',
     }
   } catch (error) {
     console.log(error)
