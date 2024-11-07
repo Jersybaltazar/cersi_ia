@@ -15,6 +15,7 @@ model User {
   createdAt    DateTime   @default(now())
   updatedAt    DateTime   @updatedAt
   stripeId     String?
+  customerId   String? 
   mercadoPagoId String?
   subscription Billings?
   campaign     Campaign[]

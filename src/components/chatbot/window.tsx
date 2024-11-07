@@ -73,8 +73,8 @@ export const BotWindow = forwardRef<HTMLDivElement, Props>(
     ref
   ) => {
     return (
-<div className="min-h-[500px] w-full h-screen flex flex-col bg-white rounded-xl border-[1px] overflow-hidden px-3 xs:px-10 py-2 sm:py-3">
-{" "}
+      <div className="min-h-[500px] w-full max-w-[400px] sm:max-w-[300px] flex flex-col bg-white rounded-xl border-[1px] overflow-hidden px-3 xs:px-10 py-2 sm:py-3">
+        {" "}
         <div className="flex justify-between px-10">
           <div className="flex gap-2 items-start">
             <div className="min-w-[60px] w-[60px] h-[60px] sm:w-20 sm:h-20 relative">
@@ -91,10 +91,10 @@ export const BotWindow = forwardRef<HTMLDivElement, Props>(
               </Avatar>
             </div>
             <div className="flex flex-col items-center">
-              <h3 className="text-base sm:text-lg font-bold leading-tight">
+              <h3 className="text-base sm:text-lg font-bold leading-tight text-black">
                 Representante de ventas en:
               </h3>
-              <p className="text-sm">{domainName.split(".com")[0]}</p>
+              <p className="text-sm text-black">{domainName.split(".com")[0]}</p>
               {realtimeMode?.mode && (
                 <RealTimeMode
                   setChats={setChat}
@@ -132,7 +132,7 @@ export const BotWindow = forwardRef<HTMLDivElement, Props>(
                   <Input
                     {...register("content")}
                     placeholder="Escribe tu mensaje..."
-                    className="focus-visible:ring-0 flex-1 p-0 focus-visible:ring-offset-0 bg-porcelain rounded-none outline-none border-none"
+                    className="focus-visible:ring-0 flex-1 p-0 focus-visible:ring-offset-0 bg-porcelain rounded-none outline-none border-none text-black"
                   />
                   <Button type="submit" className="mt-3">
                     <Send className="w-5 h-5" />

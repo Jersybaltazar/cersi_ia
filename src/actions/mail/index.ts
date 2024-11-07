@@ -142,6 +142,21 @@ export const onBulkMailer = async (email: string[], campaignId: string) => {
     const user = await currentUser()
     if (!user) return null
 
+    const userCredits = await client.user.findUnique({
+      where: { clerkId: user.id },
+      select: {
+        subscription: {
+          select: {
+            credits: true,
+          },
+        },
+      },
+    });
+
+    const availableCredits = userCredits?.subscription?.credits || 0;
+    if (availableCredits < email.length) {
+      return { status: 400, message: 'No tienes suficientes créditos para enviar estos correos.' };
+    }
     //get the template for this campaign
     const template = await client.campaign.findUnique({
       where: {
@@ -196,6 +211,7 @@ export const onBulkMailer = async (email: string[], campaignId: string) => {
     }
   } catch (error) {
     console.log(error)
+    return { status: 500, message: 'Ocurrió un error al enviar los correos' };
   }
 }
 
