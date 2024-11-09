@@ -21,12 +21,12 @@ const BotComponent: React.FC = () => {
       }
     `);
 
-    iframe.src = "http://localhost:3000/chatbot";
+    iframe.src = "http://cersi-ia.vercel.app/chatbot";
     iframe.classList.add("chat-frame");
     document.body.appendChild(iframe);
 
     const handleMessage = (e: MessageEvent) => {
-      if (e.origin !== "http://localhost:3000") return;
+      if (e.origin !== "http://cersi-ia.vercel.app") return;
       try {
         const dimensions = JSON.parse(e.data);
         iframe.width = dimensions.width;
@@ -36,7 +36,7 @@ const BotComponent: React.FC = () => {
         if (iframe.contentWindow) {
           iframe.contentWindow.postMessage(
             "f1b0cf36-778c-4f2a-918a-64975dfc08cd",
-            "http://localhost:3000/"
+            "http://cersi-ia.vercel.app/"
           );
         }
       } catch (error) {
