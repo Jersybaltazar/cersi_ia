@@ -80,20 +80,7 @@ const Page = async (props: Props) => {
               <p className="text-sm">Ver mas</p>
             </div>
             <Separator orientation="horizontal" />
-            {transactions &&
-              transactions.data.map((transaction) => (
-                <div
-                  className="flex gap-3 w-full justify-between items-center border-b-2 py-5"
-                  key={transaction.id}
-                >
-                  <p className="font-bold">
-                    {transaction.calculated_statement_descriptor}
-                  </p>
-                  <p className="font-bold text-xl">
-                    {transaction.amount / 100} PEN
-                  </p>
-                </div>
-              ))}
+
           </div>
         </div>
       </div>

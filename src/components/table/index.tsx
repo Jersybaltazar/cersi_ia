@@ -7,7 +7,7 @@ import {
   } from '@/components/ui/table'
   import { cn } from '@/lib/utils'
   
-  type DataTableProps = {
+  type DataTableProps = { 
     headers: string[]
     children: React.ReactNode
   }

@@ -29,17 +29,17 @@ const CodeSnippet = ({ id }: Props) => {
         }
     \`);
     
-    iframe.src = "http://localhost:3000/chatbot";
+    iframe.src = "http://cersi-ia.vercel.app/chatbot";
     iframe.classList.add('chat-frame')
     document.body.appendChild(iframe)
     
     window.addEventListener("message", (e) => {
-        if (e.origin !== "http://localhost:3000") return;
+        if (e.origin !== "http://cersi-ia.vercel.app") return;
         try {
             let dimensions = JSON.parse(e.data);
             iframe.width = dimensions.width;
             iframe.height = dimensions.height;
-            iframe.contentWindow.postMessage("${id}", "http://localhost:3000/");
+            iframe.contentWindow.postMessage("${id}", "http://cersi-ia.vercel.app/");
         } catch (error) {
             console.error("Error al procesar el mensaje:", error);
         }
